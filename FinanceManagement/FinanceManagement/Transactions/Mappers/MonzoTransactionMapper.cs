@@ -1,32 +1,46 @@
 ﻿namespace FinanceManagement.Transactions.Mappers
 {
     using System;
-    using System.Data;
+    using System.Collections.ObjectModel;
     using System.Globalization;
-    using DataAccess;
+    using ETL;
     using Models;
+    using Validation;
 
-    public class MonzoTransactionMapper : Mapper<MonzoTransaction>
+    public class MonzoTransactionMapper : TransactionMapper<MonzoTransaction>
     {
-        protected override MonzoTransaction Map(IDataRecord record)
+        private readonly string _columnDelimiter;
+
+        public MonzoTransactionMapper(string columnDelimiter)
         {
+            _columnDelimiter = columnDelimiter;
+        }
+
+        protected override MonzoTransaction Map(string row)
+        {
+            var cols = row.Split(new[] { _columnDelimiter }, StringSplitOptions.None);
             return new MonzoTransaction
             {
-                Id = record["id"] == DBNull.Value ? string.Empty : record["id"].ToString(),
-                Created = GetCreatedDateTime(record["created"].ToString()),
-                Amount = decimal.Parse(record["amount"].ToString()),
-                Currency = record["currency"] == DBNull.Value ? string.Empty : record["currency"].ToString(),
-                LocalAmount = decimal.Parse(record["local_amount"].ToString()),
-                LocalCurrency = record["local_currency"] == DBNull.Value ? string.Empty : record["local_currency"].ToString(),
-                Category = record["category"] == DBNull.Value ? string.Empty : record["category"].ToString(),
-                Emoji = record["emoji"] == DBNull.Value ? string.Empty : record["emoji"].ToString(),
-                Description = record["description"] == DBNull.Value ? string.Empty : record["description"].ToString(),
-                Address = record["address"] == DBNull.Value ? string.Empty : record["address"].ToString(),
-                Receipt = record["receipt"] == DBNull.Value ? string.Empty : record["receipt"].ToString()
+                Id = string.IsNullOrEmpty(cols[0]) ? string.Empty : cols[0],
+                Created = GetCreatedDateTime(cols[1]),
+                Amount = decimal.Parse(cols[2]),
+                Currency = string.IsNullOrEmpty(cols[3]) ? string.Empty : cols[3],
+                LocalAmount = decimal.Parse(cols[4]),
+                LocalCurrency = string.IsNullOrEmpty(cols[5]) ? string.Empty : cols[5],
+                Category = string.IsNullOrEmpty(cols[6]) ? string.Empty : cols[6],
+                Emoji = string.IsNullOrEmpty(cols[7]) ? string.Empty : cols[7],
+                Description = string.IsNullOrEmpty(cols[8]) ? string.Empty : cols[8],
+                Address = string.IsNullOrEmpty(cols[9]) ? string.Empty : cols[9],
+                Receipt = string.IsNullOrEmpty(cols[10]) ? string.Empty : cols[10]
             };
         }
 
-        #region Methods
+        protected override Ruleset ValidationRuleset(string row, int rowIndex)
+        {
+            return new Ruleset(row, rowIndex).IgnoreHeaderRow();
+        }
+
+        #region Helpers
 
         public DateTimeOffset GetCreatedDateTime(string sourceDate)
         {

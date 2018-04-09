@@ -2,13 +2,15 @@
 {
     using System.Collections.ObjectModel;
     using System.Data.SqlClient;
-    using DataAccess;
     using ETL.Models;
     using Models;
 
     public class MonzoTransactionBulkWriter : BulkWriter<MonzoTransaction>
     {
-        public override ImportFileBatch ImportFileBatch { get; }
+        public MonzoTransactionBulkWriter(ImportFileBatch importFileBatch) : base(importFileBatch)
+        {
+        }
+
         protected override Collection<SqlBulkCopyColumnMapping> GetMappings()
         {
             return new Collection<SqlBulkCopyColumnMapping>

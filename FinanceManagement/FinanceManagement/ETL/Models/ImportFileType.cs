@@ -1,8 +1,8 @@
 ﻿namespace FinanceManagement.ETL.Models
 {
-    public class ImportFile
+    public class ImportFileType
     {
-        public int ImportFileId { get; set; }
+        public int ImportFileTypeId { get; set; }
         public string Description { get; set; }
         public string FileExtension { get; set; }
         public string ColumnDelimiter { get; set; }

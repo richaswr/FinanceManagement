@@ -1,19 +1,21 @@
-﻿namespace FinanceManagement.DataAccess
+﻿namespace FinanceManagement.Transactions.Writers
 {
     using System.Collections.Generic;
     using System.Collections.ObjectModel;
     using System.Data;
     using System.Data.SqlClient;
+    using DataAccess;
     using ETL.Models;
 
     public abstract class BulkWriter<T> : DataContext
     {
-        protected BulkWriter()
+        private readonly ImportFileBatch _importFileBatch;
+        protected BulkWriter(ImportFileBatch importFileBatch)
         {
+            _importFileBatch = importFileBatch;
             SetSqlConnection();
         }
 
-        public abstract ImportFileBatch ImportFileBatch { get; }
         protected abstract Collection<SqlBulkCopyColumnMapping> GetMappings();
 
         public void Execute(Collection<T> sourceData)
@@ -21,7 +23,7 @@
             Connection.Open();
             using (var sqlBulkCopy = new SqlBulkCopy((SqlConnection) Connection))
             {
-                sqlBulkCopy.DestinationTableName = ImportFileBatch.ImportFile.StagingTable;
+                sqlBulkCopy.DestinationTableName = _importFileBatch.ImportFileType.StagingTable;
                 foreach (var mapping in GetMappings())
                 {
                     sqlBulkCopy.ColumnMappings.Add(mapping);
@@ -35,7 +37,7 @@
         private DataTable ConvertSourceToDataTable(IEnumerable<T> sourceData)
         {
             var sourceDataTable = new DataTable();
-            if (ImportFileBatch != null) sourceDataTable = AddStagingColumns(sourceDataTable);
+            if (_importFileBatch != null) sourceDataTable = AddStagingColumns(sourceDataTable);
 
             var classType = typeof(T);
 
@@ -47,7 +49,7 @@
             foreach (var T in sourceData)
             {
                 var sourceDataRow = sourceDataTable.NewRow();
-                sourceDataRow[0] = ImportFileBatch.ImportFileBatchId;
+                sourceDataRow[0] = _importFileBatch.ImportFileBatchId;
                 sourceDataRow[1] = batchRowId++;
 
                 foreach (var property in classType.GetProperties()) sourceDataRow[property.Name] = property.GetValue(T);

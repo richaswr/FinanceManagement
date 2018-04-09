@@ -3,10 +3,9 @@
     using System.Collections.ObjectModel;
     using System.Data;
 
-    public abstract class Mapper<T>
+    public abstract class DataMapper<T>
     {
         protected abstract T Map(IDataRecord record);
-
         public Collection<T> MapAll(IDataReader reader)
         {
             var collection = new Collection<T>();

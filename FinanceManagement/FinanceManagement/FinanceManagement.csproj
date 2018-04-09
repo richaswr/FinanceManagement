@@ -40,30 +40,41 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DataAccess\BulkWriter.cs" />
     <Compile Include="ETL\Repositories\EtlRepository.cs" />
-    <Compile Include="ETL\Mappers\ImportFileBatchMapper.cs" />
-    <Compile Include="ETL\Mappers\ImportFileMapper.cs" />
+    <Compile Include="ETL\Mappers\ImportFileBatchDataMapper.cs" />
+    <Compile Include="ETL\Mappers\ImportFileTypeDataMapper.cs" />
+    <Compile Include="ETL\IRuleset.cs" />
+    <Compile Include="ETL\Ruleset.cs" />
+    <Compile Include="ExtensionMethods.cs" />
+    <Compile Include="Transactions\Validation\IValidationRule.cs" />
+    <Compile Include="Transactions\Validation\StartsWith.cs" />
+    <Compile Include="Transactions\Writers\BulkWriter.cs" />
     <Compile Include="Transactions\Models\ITransaction.cs" />
-    <Compile Include="DataAccess\Mapper.cs" />
+    <Compile Include="DataAccess\DataMapper.cs" />
     <Compile Include="Transactions\Models\MonzoTransaction.cs" />
-    <Compile Include="Transactions\Writers\MonzoTransactionBulkWriter.cs" />
-    <Compile Include="Transactions\Mappers\MonzoTransactionMapper.cs" />
-    <Compile Include="Transactions\Readers\MonzoTransactionReader.cs" />
     <Compile Include="Transactions\Models\SantanderTransaction.cs" />
-    <Compile Include="Transactions\Writers\SantanderTransactionBulkWriter.cs" />
-    <Compile Include="Transactions\Mappers\SantanderTransactionMapper.cs" />
-    <Compile Include="Transactions\Readers\SantanderTransactionReader.cs" />
     <Compile Include="DataAccess\StoredProcedures.cs" />
     <Compile Include="DataAccess\DataContext.cs" />
     <Compile Include="ETL\ImportFileBatchStatus.cs" />
     <Compile Include="ETL\Repositories\IEtlRepository.cs" />
-    <Compile Include="ETL\Models\ImportFile.cs" />
+    <Compile Include="ETL\Models\ImportFileType.cs" />
     <Compile Include="ETL\Models\ImportFileBatch.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Transactions\Writers\MonzoTransactionBulkWriter.cs" />
+    <Compile Include="Transactions\Mappers\MonzoTransactionMapper.cs" />
+    <Compile Include="Transactions\Readers\MonzoTransactionReader.cs" />
+    <Compile Include="Transactions\Processors\ITransactionProcessor.cs" />
+    <Compile Include="Transactions\Processors\MonzoTransactionProcessor.cs" />
+    <Compile Include="Transactions\Processors\SantanderTransactionProcessor.cs" />
+    <Compile Include="Transactions\Writers\SantanderTransactionBulkWriter.cs" />
+    <Compile Include="Transactions\Mappers\SantanderTransactionMapper.cs" />
+    <Compile Include="Transactions\Readers\SantanderTransactionReader.cs" />
     <Compile Include="Transactions\TransactionClass.cs" />
+    <Compile Include="Transactions\TransactionProcessorFactory.cs" />
+    <Compile Include="Transactions\Mappers\TransactionMapper.cs" />
     <Compile Include="Transactions\Readers\TransactionReader.cs" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

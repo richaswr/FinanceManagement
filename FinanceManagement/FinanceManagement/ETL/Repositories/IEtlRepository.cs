@@ -8,23 +8,22 @@
         /// <summary>
         /// Creates an ImportFileBatch recor for the file and configuration specified.
         /// </summary>
-        /// <param name="importFile"></param>
+        /// <param name="importFileType"></param>
         /// <param name="fileName"></param>
         /// <returns></returns>
-        ImportFileBatch CreateImportFileBatch(ImportFile importFile, string fileName);
+        ImportFileBatch CreateImportFileBatch(ImportFileType importFileType, string fileName);
 
         /// <summary>
         /// Retrieves all currently active import files.
         /// </summary>
         /// <returns></returns>
-        Collection<ImportFile> GetActiveImportFiles();
+        Collection<ImportFileType> GetActiveImportFileTypes();
 
         /// <summary>
-        /// Execute the post load procedures associated with the ImportFile configuration.
+        /// BreaksValidation the post load procedures associated with the ImportFileType configuration.
         /// </summary>
         /// <param name="importFileBatch"></param>
-        /// <param name="importFileBatchId"></param>
-        void ExecutePostLoadProcedure(ImportFileBatch importFileBatch, int importFileBatchId);
+        void ExecutePostLoadProcedure(ImportFileBatch importFileBatch);
 
         /// <summary>
         /// Update the batch record count of the provided batch.

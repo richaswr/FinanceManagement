@@ -5,13 +5,13 @@
     using DataAccess;
     using Models;
 
-    public class ImportFileMapper : Mapper<ImportFile>
+    public class ImportFileTypeDataMapper : DataMapper<ImportFileType>
     {
-        protected override ImportFile Map(IDataRecord record)
+        protected override ImportFileType Map(IDataRecord record)
         {
-            return new ImportFile
+            return new ImportFileType
             {
-                ImportFileId = Convert.ToInt32(record["ImportFileId"]),
+                ImportFileTypeId = Convert.ToInt32(record["ImportFileTypeId"]),
                 ColumnDelimiter = record["ColumnDelimiter"] == DBNull.Value ? string.Empty : record["ColumnDelimiter"].ToString(),
                 Description = record["Description"] == DBNull.Value ? string.Empty : record["Description"].ToString(),
                 FileExtension = record["FileExtension"] == DBNull.Value ? string.Empty : record["FileExtension"].ToString(),

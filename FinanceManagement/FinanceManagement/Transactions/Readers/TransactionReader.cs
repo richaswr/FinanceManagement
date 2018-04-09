@@ -2,23 +2,21 @@
 {
     using System.Collections.ObjectModel;
     using System.IO;
-    using DataAccess;
-    using Transactions;
+    using Mappers;
 
-    public abstract class TransactionReader<T> : DataContext where T: ITransaction
+    public abstract class TransactionReader<T>
     {
-        public abstract Mapper<T> Mapper { get; }
+        private readonly TransactionMapper<T> _transactionMapper;
+
+        protected TransactionReader(TransactionMapper<T> transactionMapper)
+        {
+            _transactionMapper = transactionMapper;
+        }
         public Collection<T> GetTransactionsFromFile(string fileName)
         {
-            var directory = Directory.GetParent(fileName);
-            SetOdbcConnection(directory.ToString());
-            using (var command = CreateOdbcCommand(fileName))
+            using (var reader = File.OpenText(fileName))
             {
-                Connection.Open();
-                using (var reader = command.ExecuteReader())
-                {
-                    return Mapper.MapAll(reader);
-                }
+                return _transactionMapper.MapAll(reader);
             }
         }
     }

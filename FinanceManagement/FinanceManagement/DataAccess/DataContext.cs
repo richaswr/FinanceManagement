@@ -1,5 +1,6 @@
 ﻿namespace FinanceManagement.DataAccess
 {
+    using System;
     using System.Data;
     using System.Data.Odbc;
     using System.Data.SqlClient;
@@ -16,16 +17,17 @@
         /// <summary>
         /// Defines the Connection as a SqlConnection object.
         /// </summary>
-        public void SetSqlConnection()
+        public IDbConnection SetSqlConnection()
         {
             Connection = new SqlConnection(@"Data Source=Titan;Initial Catalog=Finance;Integrated Security=True");
+            return Connection;
         }
 
         /// <summary>
         /// Defines the Connection as an OdbcConnection object.
         /// </summary>
         /// <param name="directoryPath"></param>
-        public void SetOdbcConnection(string directoryPath)
+        public IDbConnection SetOdbcConnection(string directoryPath)
         {
             var builder = new OdbcConnectionStringBuilder {Driver = "{Microsoft Text Driver (*.txt; *.csv)}"};
             builder.Add("Dbq", directoryPath);
@@ -33,6 +35,7 @@
             builder.Add("Persist Security Info", "False");
 
             Connection = new OdbcConnection(builder.ConnectionString);
+            return Connection;
         }
 
         /// <summary>
@@ -76,8 +79,28 @@
             parameter.DbType = dbType;
             parameter.ParameterName = parameterName;
             parameter.Direction = parameterDirection;
-            parameter.Value = parameterValue;
+
+            ApplyParameterValue(ref parameter, parameterValue);
+
             command.Parameters.Add(parameter);
+        }
+
+        /// <summary>
+        /// Determines the value for a given parameter.
+        /// </summary>
+        /// <param name="parameter"></param>
+        /// <param name="parameterValue"></param>
+        /// <returns></returns>
+        public IDataParameter ApplyParameterValue(ref IDbDataParameter parameter, object parameterValue)
+        {
+            if (parameter.DbType == DbType.String)
+            {
+                parameter.Value = string.IsNullOrEmpty(parameterValue.ToString()) ? DBNull.Value : parameterValue;
+                return parameter;
+            }
+
+            parameter.Value = parameterValue;
+            return parameter;
         }
     }
 }

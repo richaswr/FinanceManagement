@@ -1,0 +1,37 @@
+﻿@model IEnumerable<FinanceManagement.ETL.Models.ImportFileType>
+
+@{
+    ViewData["Title"] = "Admin";
+}
+
+<h2>Admin</h2>
+
+<p>Configurations</p>
+
+<table class="table">
+    <thead>
+    <tr>
+        <th>&nbsp;</th>
+        <th>Description</th>
+        <th>Source Directory</th>
+        <th>File Name Pattern</th>
+        <th>Date Last Run</th>
+        <th></th>
+    </tr>
+    </thead>
+    <tbody>
+    @foreach (var config in Model)
+    {
+        <tr>
+            <td>@config.ImportFileTypeId</td>
+            <td>@config.Description</td>
+            <td>@config.SourceDirectory</td>
+            <td>@config.FileNamePattern</td>
+            <td>@config.DateLastRun</td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@config.ImportFileTypeId">Edit</a>
+            </td>
+        </tr>
+    }
+    </tbody>
+</table>

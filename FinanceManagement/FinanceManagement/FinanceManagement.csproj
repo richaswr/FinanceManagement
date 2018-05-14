@@ -40,14 +40,22 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ETL\BatchErrorStatus.cs" />
+    <Compile Include="ETL\Mappers\ImportFileBatchErrorMapper.cs" />
+    <Compile Include="ETL\Models\DataTableIgnoreAttribute.cs" />
+    <Compile Include="ETL\Models\ImportFileBatchError.cs" />
     <Compile Include="ETL\Repositories\EtlRepository.cs" />
     <Compile Include="ETL\Mappers\ImportFileBatchDataMapper.cs" />
     <Compile Include="ETL\Mappers\ImportFileTypeDataMapper.cs" />
     <Compile Include="ETL\IRuleset.cs" />
     <Compile Include="ETL\Ruleset.cs" />
     <Compile Include="ExtensionMethods.cs" />
-    <Compile Include="Transactions\Validation\IValidationRule.cs" />
-    <Compile Include="Transactions\Validation\StartsWith.cs" />
+    <Compile Include="Transactions\Mappers\FinanceTransactionMapper.cs" />
+    <Compile Include="Transactions\Models\FinanceTransaction.cs" />
+    <Compile Include="Transactions\Repositories\ITransactionRepository.cs" />
+    <Compile Include="Transactions\Repositories\TransactionRepository.cs" />
+    <Compile Include="Transactions\Repositories\TransactionSearchCriteria.cs" />
+    <Compile Include="Transactions\Repositories\TransactionSearchResult.cs" />
     <Compile Include="Transactions\Writers\BulkWriter.cs" />
     <Compile Include="Transactions\Models\ITransaction.cs" />
     <Compile Include="DataAccess\DataMapper.cs" />

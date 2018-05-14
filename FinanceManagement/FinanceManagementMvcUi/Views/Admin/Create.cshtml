@@ -1,0 +1,66 @@
+﻿@model FinanceManagement.ETL.Models.ImportFileType
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h2>Create</h2>
+
+<h4>ImportFileType</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>            
+            <div class="form-group">
+                <label asp-for="Description" class="control-label"></label>
+                <input asp-for="Description" class="form-control" />
+                <span asp-validation-for="Description" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="FileExtension" class="control-label"></label>
+                <input asp-for="FileExtension" class="form-control" />
+                <span asp-validation-for="FileExtension" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ColumnDelimiter" class="control-label"></label>
+                <input asp-for="ColumnDelimiter" class="form-control" />
+                <span asp-validation-for="ColumnDelimiter" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="SourceDirectory" class="control-label"></label>
+                <input asp-for="SourceDirectory" class="form-control" />
+                <span asp-validation-for="SourceDirectory" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="FileNamePattern" class="control-label"></label>
+                <input asp-for="FileNamePattern" class="form-control" />
+                <span asp-validation-for="FileNamePattern" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="PostLoadProcedure" class="control-label"></label>
+                <input asp-for="PostLoadProcedure" class="form-control" />
+                <span asp-validation-for="PostLoadProcedure" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="StagingTable" class="control-label"></label>
+                <input asp-for="StagingTable" class="form-control" />
+                <span asp-validation-for="StagingTable" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <div class="checkbox">
+                    <label>
+                        <input asp-for="IsActive" /> @Html.DisplayNameFor(model => model.IsActive)
+                    </label>
+                </div>
+            </div>            
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-default" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>

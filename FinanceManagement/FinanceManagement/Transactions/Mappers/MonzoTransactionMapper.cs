@@ -1,11 +1,9 @@
 ﻿namespace FinanceManagement.Transactions.Mappers
 {
     using System;
-    using System.Collections.ObjectModel;
     using System.Globalization;
     using ETL;
     using Models;
-    using Validation;
 
     public class MonzoTransactionMapper : TransactionMapper<MonzoTransaction>
     {

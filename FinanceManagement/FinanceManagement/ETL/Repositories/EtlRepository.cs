@@ -1,5 +1,6 @@
 ﻿namespace FinanceManagement.ETL.Repositories
 {
+    using System;
     using System.Collections.ObjectModel;
     using System.Data;
     using DataAccess;
@@ -12,7 +13,7 @@
         {
             //TODO Handle errors
             var importFileBatch = new ImportFileBatch();
-            var mapper = new ImportFileBatchDataMapper();
+            var mapper = new ImportFileBatchDataMapper(importFileType);
             SetSqlConnection();
 
             using (Connection)
@@ -30,18 +31,96 @@
                 }
             }
 
-            importFileBatch.ImportFileType = importFileType;
             return importFileBatch;
         }
 
-        public Collection<ImportFileType> GetActiveImportFileTypes()
+        public ImportFileType CreateImportFileType(ImportFileType importFileType)
+        {
+            var newImportFileType = new ImportFileType();
+            var mapper = new ImportFileTypeDataMapper();
+
+            SetSqlConnection();
+            using (Connection)
+            using (var command = CreateSqlCommand(StoredProcedures.CreateImportFileType))
+            {
+                AddParameter(command, DbType.String, "Description", importFileType.Description);
+                AddParameter(command, DbType.String, "FileExtension", importFileType.FileExtension);
+                AddParameter(command, DbType.String, "ColumnDelimiter", importFileType.ColumnDelimiter);
+                AddParameter(command, DbType.String, "SourceDirectory", importFileType.SourceDirectory);
+                AddParameter(command, DbType.String, "FileNamePattern", importFileType.FileNamePattern);
+                AddParameter(command, DbType.String, "PostLoadProcedure", importFileType.PostLoadProcedure);
+                AddParameter(command, DbType.String, "StagingTable", importFileType.StagingTable);
+                AddParameter(command, DbType.Boolean, "IsActive", importFileType.IsActive);
+                Connection.Open();
+                using (var reader = command.ExecuteReader())
+                {
+                    if (reader.HasRows)
+                    {
+                        newImportFileType = mapper.MapSingle(reader);
+                    }
+                }
+            }
+
+            return newImportFileType;
+        }
+
+        public Collection<ImportFileBatch> GetImportFileBatchesByTypeAndDate(ImportFileType importFileType, DateTime fromDate)
+        {
+            var importFileBatches = new Collection<ImportFileBatch>();
+            var mapper = new ImportFileBatchDataMapper(importFileType);
+
+            SetSqlConnection();
+
+            using (Connection)
+            using (var command = CreateSqlCommand(StoredProcedures.GetImportFileBatchesByTypeAndDate))
+            {
+                AddParameter(command, DbType.Byte, "ImportFileTypeId", importFileType.ImportFileTypeId);
+                AddParameter(command, DbType.DateTime, "DateFrom", fromDate);
+                Connection.Open();
+                using (var reader = command.ExecuteReader())
+                {
+                    if (reader.HasRows)
+                    {
+                        importFileBatches = mapper.MapAll(reader);
+                    }
+                }
+            }
+
+            return importFileBatches;
+        }
+
+        public Collection<ImportFileBatchError> GetImportFileBatchErrors(ImportFileBatch importFileBatch)
+        {
+            var importFileBatchErrors = new Collection<ImportFileBatchError>();
+            var mapper = new ImportFileBatchErrorMapper(importFileBatch);
+
+            SetSqlConnection();
+
+            using (Connection)
+            using (var command = CreateSqlCommand(StoredProcedures.GetImportFileBatchErrors))
+            {
+                AddParameter(command, DbType.Int32, "ImportFileBatchId", importFileBatch.ImportFileBatchId);
+                Connection.Open();
+                using (var reader = command.ExecuteReader())
+                {
+                    if (reader.HasRows)
+                    {
+                        importFileBatchErrors = mapper.MapAll(reader);
+                    }
+                }
+            }
+
+            return importFileBatchErrors;
+        }
+
+        public Collection<ImportFileType> GetImportFileTypes()
         {
             var mapper = new ImportFileTypeDataMapper();
 
             SetSqlConnection();
 
             using (Connection)
-            using (var command = CreateSqlCommand(StoredProcedures.GetActiveImportFiles))
+            using (var command = CreateSqlCommand(StoredProcedures.GetImportFileTypes))
             {
                 Connection.Open();
                 using (var reader = command.ExecuteReader())
@@ -93,6 +172,28 @@
                 Connection.Open();
                 command.ExecuteNonQuery();
             }
+        }
+
+        public void UpdateImportFileType(ImportFileType importFileType)
+        {
+            SetSqlConnection();
+            using (Connection)
+            using (var command = CreateSqlCommand(StoredProcedures.UpdateImportFileType))
+            {
+                AddParameter(command, DbType.Int32, "ImportFileTypeId", importFileType.ImportFileTypeId);
+                AddParameter(command, DbType.String, "Description", importFileType.Description);
+                AddParameter(command, DbType.String, "FileExtension", importFileType.FileExtension);
+                AddParameter(command, DbType.String, "ColumnDelimiter", importFileType.ColumnDelimiter);
+                AddParameter(command, DbType.String, "SourceDirectory", importFileType.SourceDirectory);
+                AddParameter(command, DbType.String, "FileNamePattern", importFileType.FileNamePattern);
+                AddParameter(command, DbType.String, "PostLoadProcedure", importFileType.PostLoadProcedure);
+                AddParameter(command, DbType.String, "StagingTable", importFileType.StagingTable);
+                AddParameter(command, DbType.Boolean, "IsActive", importFileType.IsActive);
+
+                Connection.Open();
+                command.ExecuteNonQuery();
+            }
+
         }
     }
 }

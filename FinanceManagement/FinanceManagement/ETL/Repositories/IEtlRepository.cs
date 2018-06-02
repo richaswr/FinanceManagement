@@ -20,6 +20,12 @@
         /// <param name="importFileType"></param>
         /// <returns></returns>
         ImportFileType CreateImportFileType(ImportFileType importFileType);
+
+        /// <summary>
+        /// Retrieves all ImportFileBatches
+        /// </summary>
+        /// <returns></returns>
+        Collection<ImportFileBatch> GetImportFileBatches();
         
         /// <summary>
         /// Retrieves all ImportFileBatches by type created after the specified date

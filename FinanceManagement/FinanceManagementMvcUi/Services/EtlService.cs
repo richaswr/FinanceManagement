@@ -30,6 +30,11 @@
             return importFileTypes;
         }
 
+        public Collection<ImportFileBatch> GetImportFileBatches()
+        {
+            return _etlRepository.GetImportFileBatches();
+        }
+
         public ImportFileType GetImportFileTypeById(int importFileTypeId)
         {
             return GetImportFileTypes().SingleOrDefault(s => s.ImportFileTypeId == importFileTypeId);

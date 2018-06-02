@@ -18,6 +18,12 @@
         Collection<ImportFileType> GetActiveImportFileTypes();
 
         /// <summary>
+        /// Get all ImportFileBatch records.
+        /// </summary>
+        /// <returns></returns>
+        Collection<ImportFileBatch> GetImportFileBatches();
+
+        /// <summary>
         /// Get a specific ImportFileType record by it's Id value.
         /// </summary>
         /// <param name="importFileTypeId"></param>

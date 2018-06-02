@@ -9,6 +9,7 @@
     {
         private readonly ImportFileType _importFileType;
 
+        public ImportFileBatchDataMapper() { }
         public ImportFileBatchDataMapper(ImportFileType importFileType)
         {
             _importFileType = importFileType;
@@ -21,7 +22,7 @@
                 : (ImportFileBatchStatus) Enum.Parse(typeof(ImportFileBatchStatus),
                     record["ImportFileBatchStatusId"].ToString());
 
-            return new ImportFileBatch
+            var importFileBatch = new ImportFileBatch
             {
                 ImportFileBatchId = Convert.ToInt32(record["ImportFileBatchId"]),
                 ImportFileTypeId = Convert.ToInt32(record["ImportFileTypeId"]),
@@ -29,8 +30,15 @@
                 ImportFileBatchStatus = importFileBatchStatus,
                 ImportFileName = record["ImportFileName"] == DBNull.Value ? string.Empty : record["ImportFileName"].ToString(),
                 RecordCount = record["RecordCount"] == DBNull.Value ? 0 : Convert.ToInt32(record["RecordCount"]),
-                ImportFileType = _importFileType
+                ImportFileBatchErrorCount = Convert.ToInt32(record["NoOfImportFileBatchErrors"])
             };
+
+            if (_importFileType != null)
+            {
+                importFileBatch.ImportFileType = _importFileType;
+            }
+
+            return importFileBatch;
         }
     }
 }

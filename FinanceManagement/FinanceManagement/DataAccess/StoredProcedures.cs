@@ -10,6 +10,7 @@
         public const string GetImportFileBatchErrors = "etl.GetImportFileBatchErrors";
         public const string UpdateImportFileType = "etl.UpdateImportFileType";
         public const string CreateImportFileType = "etl.CreateImportFileType";
+        public const string GetImportFileBatches = "etl.GetImportFileBatches";
 
         public const string GetFinanceTransactions = "dbo.GetFinanceTransactions";
     }

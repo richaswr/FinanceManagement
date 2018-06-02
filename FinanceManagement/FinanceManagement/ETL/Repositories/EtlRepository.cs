@@ -3,6 +3,7 @@
     using System;
     using System.Collections.ObjectModel;
     using System.Data;
+    using System.Linq;
     using DataAccess;
     using Mappers;
     using Models;
@@ -62,6 +63,29 @@
             }
 
             return newImportFileType;
+        }
+
+        public Collection<ImportFileBatch> GetImportFileBatches()
+        {
+            var importFileBatches = new Collection<ImportFileBatch>();
+            var mapper = new ImportFileBatchDataMapper();
+
+            SetSqlConnection();
+
+            using (Connection)
+            using (var command = CreateSqlCommand(StoredProcedures.GetImportFileBatches))
+            {
+                Connection.Open();
+                using (var reader = command.ExecuteReader())
+                {
+                    if (reader.HasRows)
+                    {
+                        importFileBatches = mapper.MapAll(reader);
+                    }
+                }
+            }
+
+            return MapImportFileTypesToImportFileBatches(importFileBatches);
         }
 
         public Collection<ImportFileBatch> GetImportFileBatchesByTypeAndDate(ImportFileType importFileType, DateTime fromDate)
@@ -194,6 +218,24 @@
                 command.ExecuteNonQuery();
             }
 
+        }
+
+        private Collection<ImportFileBatch> MapImportFileTypesToImportFileBatches(Collection<ImportFileBatch> importFileBatches)
+        {
+            var importFileTypes = GetImportFileTypes();
+
+            foreach (var importFileBatch in importFileBatches)
+            {
+                var importFileType = importFileTypes.SingleOrDefault(s => s.ImportFileTypeId == importFileBatch.ImportFileTypeId);
+                if (importFileType == null)
+                {
+                    continue;
+                }
+
+                importFileBatch.ImportFileType = importFileType;
+            }
+
+            return importFileBatches;
         }
     }
 }

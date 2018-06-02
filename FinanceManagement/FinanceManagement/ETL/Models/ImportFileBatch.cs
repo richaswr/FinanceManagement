@@ -11,5 +11,6 @@
         public string ImportFileName { get; set; }
         public int RecordCount { get; set; }
         public ImportFileType ImportFileType { get; set; }
+        public int ImportFileBatchErrorCount { get; set; }
     }
 }

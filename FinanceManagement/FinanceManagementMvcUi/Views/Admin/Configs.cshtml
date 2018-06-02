@@ -1,0 +1,41 @@
+﻿@model IEnumerable<FinanceManagement.ETL.Models.ImportFileType>
+
+<div>    
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h4 class="panel-title">Import File Types</h4>
+        </div>
+        <table class="table">
+            <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Description</th>
+                <th scope="col">FileExtension</th>
+                <th scope="col">SourceDirectory</th>
+                <th scope="col">FileNamePattern</th>
+                <th scope="col">PostLoadProcedure</th>
+                <th scope="col">StagingTable</th>
+                <th scope="col">IsActive</th>
+                <th scope="col">DateLastRun</th>
+            </tr>
+            </thead>
+            <tbody>
+            @foreach (var config in Model)
+            {
+                <tr>
+                    <th scope="row">@config.ImportFileTypeId</th>
+                    <td>@config.Description</td>
+                    <td>@config.FileExtension</td>
+                    <td>@config.SourceDirectory</td>
+                    <td>@config.FileNamePattern</td>
+                    <td>@config.PostLoadProcedure</td>
+                    <td>@config.StagingTable</td>
+                    <td>@config.IsActive</td>
+                    <td>@config.DateLastRun</td>
+                </tr>
+            }
+            </tbody>
+        </table>
+    </div>
+    
+</div>

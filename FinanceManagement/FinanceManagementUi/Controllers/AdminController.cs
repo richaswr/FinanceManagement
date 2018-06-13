@@ -7,13 +7,6 @@
     [Authorize(Roles = "Admin")]
     public class AdminController : Controller
     {
-        private readonly IAdminService _adminService;
-
-        public AdminController()
-        {
-            _adminService = new AdminService();
-        }
-        
         // GET: /<controller>/
         [Authorize(Roles = "Admin")]
         public IActionResult Index()

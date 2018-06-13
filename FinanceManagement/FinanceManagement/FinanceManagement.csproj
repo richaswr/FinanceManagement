@@ -81,6 +81,14 @@
     <Compile Include="Transactions\TransactionProcessorFactory.cs" />
     <Compile Include="Transactions\Mappers\TransactionMapper.cs" />
     <Compile Include="Transactions\Readers\TransactionReader.cs" />
+    <Compile Include="Users\Mappers\AspNetRoleMapper.cs" />
+    <Compile Include="Users\Mappers\AspNetUserMapper.cs" />
+    <Compile Include="Users\Mappers\UserMapper.cs" />
+    <Compile Include="Users\Models\AspNetUser.cs" />
+    <Compile Include="Users\Models\AspNetRole.cs" />
+    <Compile Include="Users\Models\User.cs" />
+    <Compile Include="Users\Repositories\IUserRepository.cs" />
+    <Compile Include="Users\Repositories\UserRepository.cs" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

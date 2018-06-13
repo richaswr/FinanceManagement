@@ -1,0 +1,31 @@
+﻿@model FinanceManagementUi.Models.AdminViewModels.UsersViewModel
+
+@{
+    ViewData["Title"] = "Users";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<h2>Users</h2>
+<div>
+    <table class="table">
+        <thead>
+        <tr>
+            <th scope="col">Id</th>
+            <th scope="col">EmailAddress</th>
+            <th scope="col">IsLockedOut</th>
+            <th scope="col">&nbsp;</th>
+        </tr>
+        </thead>
+        <tbody>
+        @foreach (var user in Model.Users)
+        {
+            <tr>
+                <th scope="row">@user.UserId</th>
+                <th scope="row">@user.AspNetUser.Email</th>
+                <th scope="row">@user.AspNetUser.LockoutEnabled</th>
+                <th scope="row">View</th>
+            </tr>
+        }
+        </tbody>
+    </table>
+</div>

@@ -13,5 +13,9 @@
         public const string GetImportFileBatches = "etl.GetImportFileBatches";
 
         public const string GetFinanceTransactions = "dbo.GetFinanceTransactions";
+        public const string GetUserByEmailAddress = "dbo.GetUserByEmailAddress";
+        public const string GetUserByUserId = "dbo.GetUserByUserId";
+        public const string GetUsers = "dbo.GetUsers";
+        public const string GetRolesByUserId = "dbo.GetRolesByUserId";
     }
 }

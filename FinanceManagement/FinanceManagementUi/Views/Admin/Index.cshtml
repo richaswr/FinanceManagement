@@ -1,0 +1,17 @@
+﻿@model FinanceManagementUi.Models.AdminViewModels.AdminViewModel
+
+@{
+    ViewData["Title"] = "Admin";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<h2>Admin</h2>
+
+<div>
+    <hr />
+    <dl class="dl-horizontal">
+    </dl>
+</div>
+
+@await Html.PartialAsync("Configs", @Model.Configurations)
+@await Html.PartialAsync("Batches", @Model.Batches)

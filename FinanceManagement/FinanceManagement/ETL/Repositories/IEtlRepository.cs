@@ -26,7 +26,7 @@
         /// </summary>
         /// <returns></returns>
         Collection<ImportFileBatch> GetImportFileBatches();
-        
+
         /// <summary>
         /// Retrieves all ImportFileBatches by type created after the specified date
         /// </summary>
@@ -40,7 +40,7 @@
         /// <param name="importFileBatch"></param>
         /// <returns></returns>
         Collection<ImportFileBatchError> GetImportFileBatchErrors(ImportFileBatch importFileBatch);
-        
+
         /// <summary>
         /// Retrieves all import files types.
         /// </summary>

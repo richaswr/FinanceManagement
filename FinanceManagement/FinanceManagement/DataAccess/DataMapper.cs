@@ -23,5 +23,10 @@
             reader.Read();
             return Map(reader);
         }
+
+        public T MapSingle(IDataRecord record)
+        {
+            return Map(record);
+        }
     }
 }
